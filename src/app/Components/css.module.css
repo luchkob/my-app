@@ -16,6 +16,7 @@
 .label{
     position: relative;
     display: block;
+    z-index: 1;
     transform: translateY(-2rem) translateX(-0rem);
     color: red;
     transition: all 0.5s linear;
@@ -25,7 +26,7 @@
 }
  .login{
     font-family: 'Playfair Display', serif;
-     z-index: -1;
+    
     width:  100%;
     text-align: center;
     font-size: 2rem;
@@ -59,6 +60,7 @@
     padding-top: 4px;
     top: 0%;
     left: 0%;
+    z-index: 3;
     background-color: rgb(93, 114, 230);
     animation: sidebar 0.8s  backwards;
 }

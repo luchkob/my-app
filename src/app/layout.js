@@ -19,12 +19,7 @@ export default function RootLayout({ children }) {
 {/* <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 <link rel="manifest" href="/site.webmanifest" /> */}
       </head>
-      <body className="w-screen   ">
-      <nav className='bg-blue-600  p-4   flex justify-end gap-3   text-yellow-50 uppercase ' >
-        <Sidebar/>
-        <Link href="/dashbord" className=''>dashbord</Link>
-        <Link href="/" className=''>Home</Link>
-       </nav>    
+      <body className="w-screen "> 
        {children}
         </body>
     </html>
