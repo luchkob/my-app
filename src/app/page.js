@@ -1,6 +1,6 @@
 'use client'
-import Home from './Components/Home'
-import Login from './Components/Login'
+ import Home from './Components/Home'
+ import Login from './Components/Login'
 import React, { useContext ,createContext, useState, useReducer, useEffect} from 'react'
 // import { createUserWithEmailAndPassword,deleteUser,signInWithEmailAndPassword,onAuthStateChanged, updatePassword, sendEmailVerification, updateEmail, signOut } from 'firebase/auth'
 import { auth } from './db/firebase_config'
