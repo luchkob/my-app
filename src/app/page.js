@@ -8,7 +8,7 @@ import { onAuthStateChanged } from 'firebase/auth'
  
 export const AuthContext=createContext(null)
 
-export default function page() {
+export default function Page() {
    const [login,setlogin]=useState(false)
   
    useEffect(()=>{
