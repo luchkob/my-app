@@ -2,10 +2,19 @@
 import React, { useRef } from 'react'
 import { useState,useContext } from 'react'
 import { AuthContext } from '../page'
-import { createUserWithEmailAndPassword,signInWithEmailAndPassword ,GoogleAuthProvider,signInWithRedirect,getRedirectResult} from 'firebase/auth'
+import {
+   createUserWithEmailAndPassword,
+   signInWithEmailAndPassword ,
+   signInWithPopup,GoogleAuthProvider
+   ,signInWithRedirect,getRedirectResult,
+   FacebookAuthProvider
+  
+  } from 'firebase/auth'
 import { auth } from '../db/firebase_config'
 import {FcGoogle} from 'react-icons/fc'
+import {AiFillFacebook} from 'react-icons/ai'
 const provider =new GoogleAuthProvider()
+const FacebookProvider=new FacebookAuthProvider()
 
 export default function Login() {
      const [input,setInput]=useState({email:'',password:""})
@@ -30,6 +39,7 @@ export default function Login() {
     const errorMessage = error.message;
     // The email of the user's account used.
     const email = error.customData.email;
+    
     // The AuthCredential type that was used.
     const credential = GoogleAuthProvider.credentialFromError(error);
     // ...
@@ -73,8 +83,16 @@ export default function Login() {
 
      }
        
-        
-    
+     function FacebookSignin(){
+     signInWithRedirect(auth,FacebookProvider)
+     getRedirectResult(auth)
+     .then(()=>{
+      setlogin(!login)
+     })
+     .catch(()=>{
+      alert("please try again")
+     })
+     }
   return (
     <div className=' w-screen h-screen 
     '>
@@ -91,8 +109,11 @@ export default function Login() {
     <div className='flex gap-3 uppercase text items-center justify-center'>
     <input onClick={loginUser} type='submit' value='login' className='hover:text-red-500'/>
     <input onClick={singup} type='submit' value='singup' className='hover:text-blue-700'/>
-    <div className='block mt-2' onClick={GoogleSignin}>
+    <div className='block mt-2 hover:scale-150 duration-500' onClick={GoogleSignin} >
        <FcGoogle/>
+    </div>
+    <div onClick={FacebookSignin} className='block mt-2 hover:scale-150 duration-500 text-blue-800' >
+    <AiFillFacebook/>
     </div>
     </div>
     </form>
