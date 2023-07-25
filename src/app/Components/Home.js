@@ -33,7 +33,8 @@ function Home() {
       <div className='translate-y-20 mx-8  '>
            <h1 className='text-2xl '>Welcom puk ah cherm</h1>
            <p>This is a sample project created using NextJS, Firebase and TailwindCSS.</p><br/>
-           
+          
+           <video src='kakashi.mp4' autoPlay  loop  width={400} height={100}/> 
  
       </div>
     </>
