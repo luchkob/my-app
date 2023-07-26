@@ -5,7 +5,7 @@ import { signOut } from 'firebase/auth'
  import {AiOutlineComment,AiOutlineHeart,AiOutlineLoading3Quarters} from 'react-icons/ai'
   import { getFirestore,addDoc,collection,getDocs } from 'firebase/firestore'
   import {app} from "../db/firebase_config"
-
+import Image from 'next/image'
   const db=getFirestore(app)
 function Home() {
    const [comment,setcomment]=useState(null)
@@ -79,7 +79,7 @@ function Home() {
     <div className='fixed items-center bg-blue-600 p-5 w-screen flex justify-between  '>
        <div className='flex '>
         <button onClick={()=>logOut()}className="bg-white  rounded px-4 py">L0GOUT</button>
-        <img className='rounded-lg ml-2' src={auth.currentUser.photoURL} width={40} height={40} />
+        <Image alt='sorry' className='rounded-lg ml-2' src={auth.currentUser.photoURL} width={40} height={40} />
          {/* <img className='inline ml-3 bg-transparent text-blue-500' width={20} height={20}  src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDed61nMZ0kLsFJGTkmPJDSPsKp9xlr-dwvTnOrprMuQ&s'></img> */}
        </div>
          <span>
@@ -106,7 +106,7 @@ function Home() {
               loading ? 
               ( 
               <div className='fixed w-full h-44 flex items-center justify-center  bg-white shadow-md shadow-blue-200   -translate-y-20 m-auto'>
-                  <img src='Spinner.svg' width={100} height={100}/>
+                  <Image src='Spinner.svg' width={100} height={100}/>
             </div>
          ):
            (<div></div>)
@@ -115,11 +115,11 @@ function Home() {
               <div className={ShowComment ? ' transition-all duration-300 ease-linear h-fit w-full':'hidden transition-all duration-200'}>
                  {allComment.map(e=>{
                   return(
-                    <div className='border-b-2 mt-2 text-white rounded-lg bg-blue-400 flex p-3 justify-between '>
+                    <div key={e.comment} className='border-b-2 mt-2 text-white rounded-lg bg-blue-400 flex p-3 justify-between '>
                       <p>{e.comment}</p>
                      <div className='flex gap-2'>
                       <span className='text-red-600'>{e.userComment}</span>
-                      <img src={e.userProfile} width={20} height={20}/>
+                      <Image src={e.userProfile} width={20} height={20} alt='sorry'/>
                       </div>
                     </div>
                   )
