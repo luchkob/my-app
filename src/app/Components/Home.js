@@ -1,10 +1,19 @@
  "use client"
-import React from 'react'
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { auth } from '../db/firebase_config'
 import { signOut } from 'firebase/auth'
- import { CldVideoPlayer } from 'next-cloudinary'
- 
+ import {AiOutlineComment,AiOutlineHeart,AiOutlineLoading3Quarters} from 'react-icons/ai'
+  import { getFirestore,addDoc,collection,getDocs } from 'firebase/firestore'
+  import {app} from "../db/firebase_config"
+
+  const db=getFirestore(app)
 function Home() {
+   const [comment,setcomment]=useState(null)
+   const inputRef=useRef(null)
+   const [allComment,setAllComment]=useState([])
+   const [loading,setLoading]=useState(false)
+   const [ShowComment,setShowComment]=useState(false)
+   
  async function logOut(){
    signOut(auth)
    .then(()=>{
@@ -14,6 +23,55 @@ function Home() {
     alert('error')
    })
   }
+  
+ async function Add(){
+    
+  if(inputRef.current.value===''){
+     
+  }else{
+       setLoading(true)
+       try {
+        const docRef = await addDoc(collection(db, "newComment"), {
+           comment:comment,
+           userComment:auth.currentUser.displayName,
+           userProfile:auth.currentUser.photoURL
+        });
+         inputRef.current.value=''
+           setLoading(false)
+        
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      
+      
+      }
+    }
+  }
+ 
+ useEffect(()=>{
+const todos=[]
+  async function my (){
+    const querySnapshot = await getDocs(collection(db, "newComment",));
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      // console.log(doc.id, " => ", doc.data());
+      todos.push({...doc.data()})
+      // console.log(todos)
+      setAllComment(todos)
+      
+    });
+    
+  }
+  
+  my()
+  
+ 
+ },[])
+
+ var getComment= ()=>{
+    setShowComment(!ShowComment)
+  
+ }
+  
   return (
     <>
     <div className='fixed items-center bg-blue-600 p-5 w-screen flex justify-between  '>
@@ -34,9 +92,43 @@ function Home() {
            <h1 className='text-2xl '>Welcom puk ah cherm</h1>
            <p>This is a sample project created using NextJS, Firebase and TailwindCSS.</p><br/>
           
-           <video src='kakashi.mp4' autoPlay  loop  width={400} height={100}/> 
- 
+           <video controls src='https://res.cloudinary.com/dk83fjruf/video/upload/v1690296898/kakashi_dzb9pc.mp4' autoPlay  loop  width={400} height={100}/> 
+          <div className='border-blue-600 border-2 mt-4 w-fit rounded-lg'>       
+           <input type='text' ref={inputRef} onChange={(e)=>setcomment(e.target.value)} placeholder='write comment!' className=' ml-1  border-blue-500 outline-none'/>
+           <button onClick={Add} className='text-blue-50 bg-blue-600 p-2 rounded-lg'> SEND</button>
+           </div>
+           <div  className='flex text-2xl gap-7 ml-4 mt-2'>
+            <span onClick={getComment} className='hover:scale-150 hover:text-blue-600 duration-200'><AiOutlineComment/></span>
+            <span ><AiOutlineHeart/></span>
+            {
+              loading ? 
+              ( 
+              <div className='fixed w-full h-44 flex items-center justify-center  bg-white shadow-md shadow-blue-200   -translate-y-20 m-auto'>
+                  <img src='Spinner-1s-200px.svg' width={100} height={100}/>
+            </div>
+         ):
+           (<div></div>)
+            }
+             </div>
+              <div className={ShowComment ? ' transition-all duration-300 ease-linear h-fit w-full':'hidden transition-all duration-200'}>
+                 {allComment.map(e=>{
+                  return(
+                    <div className='border-b-2 mt-2 text-white rounded-lg bg-blue-400 flex p-3 justify-between '>
+                      <p>{e.comment}</p>
+                     <div className='flex gap-2'>
+                      <span className='text-red-600'>{e.userComment}</span>
+                      <img src={e.userProfile} width={20} height={20}/>
+                      </div>
+                    </div>
+                  )
+                 })}
+              </div>
+
+          
+           
+          
       </div>
+       
     </>
 
   )
