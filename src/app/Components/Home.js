@@ -48,7 +48,12 @@ function Home() {
   }
  
  useEffect(()=>{
-const todos=[]
+
+ 
+ },[])
+
+ var getComment= ()=>{
+    const todos=[]
   async function my (){
     const querySnapshot = await getDocs(collection(db, "newComment",));
     querySnapshot.forEach((doc) => {
@@ -63,12 +68,9 @@ const todos=[]
   }
   
   my()
-  
- 
- },[])
+  setShowComment(!ShowComment)
 
- var getComment= ()=>{
-    setShowComment(!ShowComment)
+  
   
  }
   
@@ -77,7 +79,7 @@ const todos=[]
     <div className='fixed items-center bg-blue-600 p-5 w-screen flex justify-between  '>
        <div className='flex '>
         <button onClick={()=>logOut()}className="bg-white  rounded px-4 py">L0GOUT</button>
-        <img className='rounded-lg ml-2' src={auth.currentUser.photoURL} width={40} height={40} alt='sorry'/>
+        <img className='rounded-lg ml-2' src={auth.currentUser.photoURL} width={40} height={40} />
          {/* <img className='inline ml-3 bg-transparent text-blue-500' width={20} height={20}  src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDed61nMZ0kLsFJGTkmPJDSPsKp9xlr-dwvTnOrprMuQ&s'></img> */}
        </div>
          <span>
@@ -99,12 +101,12 @@ const todos=[]
            </div>
            <div  className='flex text-2xl gap-7 ml-4 mt-2'>
             <span onClick={getComment} className='hover:scale-150 hover:text-blue-600 duration-200'><AiOutlineComment/></span>
-            <span ><AiOutlineHeart/></span>
+            {/* <span ><AiOutlineHeart/></span> */}
             {
               loading ? 
               ( 
               <div className='fixed w-full h-44 flex items-center justify-center  bg-white shadow-md shadow-blue-200   -translate-y-20 m-auto'>
-                  <img src='Spinner-1s-200px.svg' width={100} height={100}/>
+                  <img src='Spinner.svg' width={100} height={100}/>
             </div>
          ):
            (<div></div>)
